@@ -3,12 +3,11 @@ class Personaje:
     Esta es la clase generica o padre.
     De acá salen las subclases.
     """
-    def __init__(self, nombre, raza):
+    def __init__(self, nombre, raza, poder):
         self.nombre = nombre
         self.raza = raza
         self.habilidades = []
-        self.poder = 500
-        self.vida = 100
+        self.poder = poder
         self.nivel = 1
 
     def entrenar(self, horas):
@@ -58,10 +57,10 @@ class Saiyajin(Personaje):
     - Transformarse.
     - ...
     """
-    def __init__(self, nombre):
+    def __init__(self, nombre, poder):
         # Coloco la raza como un string debido a que al heredar la clase Personaje esta lo pide como atributo obligatorio.
         # Queda pendiente ver si mantener o no el atributo raza de la clase Personaje.
-        super().__init__(nombre, "Saiyajin") # Super es para heredar clases.
+        super().__init__(nombre, "Saiyajin", poder) # Super es para heredar clases.
         self.nivel_transformacion = 0
 
     def transformarse(self):
@@ -91,8 +90,8 @@ class Namekuseijin(Personaje):
     - Transformarse.
     - ...
     """
-    def __init__(self, nombre):
-        super().__init__(nombre, "Namekuseijin")
+    def __init__(self, nombre, poder):
+        super().__init__(nombre, "Namekuseijin", poder)
         self.transformado = False
 
     def transformarse(self):
@@ -109,11 +108,16 @@ class Namekuseijin(Personaje):
         print(f"¡{self.nombre} ya se transformó!")
 
 class Terrícola(Personaje):
-    def __init__(self, nombre):
-        super().__init__(nombre, "Terrícola") # Coloco la raza como un string.
+    def __init__(self, nombre, poder):
+        super().__init__(nombre, "Terrícola", poder) # Coloco la raza como un string.
         self.transformado = False
     
-    #funcion que haga que el terricola entre en modo maestro y aumente su poder
     def usar_habilidad_especial(self):
-        if not self.transformado: #para asegurar que solo pueda activar este habilidad una vez
-            print(f"{self.nombre} ha activado su habilidad especial y entro en su modo")
+        if not self.transformado:
+            print(f"{self.nombre} ha activado su habilidad espacial, entro en Modo maestro.")
+            nuevo_poder = self.poder * 5
+            print(f"el poder de {self.nombre} aumento a {nuevo_poder}.")
+            self.poder = nuevo_poder
+            self.transformado = True
+        else:
+            print(f"¡¡{self.nombre} la habilidad ya está activa!!")

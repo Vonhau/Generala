@@ -1,5 +1,4 @@
 from personajes import *
-from combate import *
 
 def menu():
     print("¡Bienvenido al Dragon Ball Sparking 2D!")
@@ -75,11 +74,11 @@ class ArbolBinario:
             nodo = nodo.derecha
         return nodo.personaje
     
-    def imprimir_en_orden(self, raiz):
-        if raiz is not None:
-            self.imprimir_en_orden(raiz.izquierda)
-            print(f"Nombre: {raiz.personaje.nombre}, Poder: {raiz.personaje.poder}")
-            self.imprimir_en_orden(raiz.derecha)
+    def imprimir_en_orden(self, nodo_actual=None):
+        if nodo_actual is not None:
+            self.imprimir_en_orden(nodo_actual.izquierda)
+            print(f"Nombre: {nodo_actual.personaje.nombre}, Poder: {nodo_actual.personaje.poder}")
+            self.imprimir_en_orden(nodo_actual.derecha)
 
 def main():
     arbol = ArbolBinario()
@@ -90,37 +89,13 @@ def main():
         Saiyajin("Vegeta", poder=8500),
         Terrícola("Yamcha", poder=3500)
     ]
-    # Insertar personajes en el árbol binario
+
     for personaje in personajes:
         arbol.insertar(personaje)
-    # Imprimir personajes en orden de poder del árbol
-    print("\nPersonajes en orden de poder (Arbol Binario):")
-    arbol.imprimir_en_orden(arbol.raiz)
-    # Encontrar el personaje más fuerte en el árbol
-    maximo = arbol.buscar_maximo()
-    print(f"\n¡¡El personaje más fuerte es {maximo.nombre} con un poder de {maximo.poder}!!")
 
-    print("\n---------")
-    print("\nAhora, ordenamos en formato de cola y mostramos quien va a ser el siguiente en pelear según su nivel de pelea.")
+    print("\nPersonajes en orden de poder:")
+    arbol.imprimir_en_orden()
+    print(f"\nEl personaje más fuerte es: {arbol.buscar_maximo().nombre}")
 
-    # Crear la cola de prioridad y agregar personajes
-    cola_combate = ColadePrioridad()
-    for personaje in personajes:
-        cola_combate.agregar_personaje(personaje)
-
-    print("\n---------")
-    cola_combate.imprimir_cola()
-    print("\n---------")
-
-    # Mostrar el siguiente en combatir
-    cola_combate.siguiente_combatiente()
-
-    torneo = Torneo()
-    for personaje in personajes:
-        torneo.agregar_personaje(personaje)
-    
-    torneo.iniciar_torneo()
-
-    
 if __name__ == "__main__":
     main()
